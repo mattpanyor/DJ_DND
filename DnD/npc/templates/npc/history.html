@@ -1,0 +1,11 @@
+NPC: {{ npc.npc_name }}
+<br/>
+DMG History:
+{% if dmg_history %}
+    <br/>
+    <ul>
+        {% for dmgh in dmg_history %}
+            <li>{{ dmgh }}</li>
+        {% endfor %}
+    </ul>
+{% else %}None{% endif %}

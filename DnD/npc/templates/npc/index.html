@@ -1,0 +1,27 @@
+<form method="post" action="{% url 'npc:add' %}">
+    {% csrf_token %}
+    <input name="npc_name" id="npc_name" type="text">
+
+    <input type="number" name="npc_health">
+    <input type="submit">
+</form>
+
+<hr/>
+<ul>
+    {% for npc in npc_list %}
+        <li>
+            <a href="{% url 'npc:history' npc.id %}">{{ npc.npc_name }}</a>   ({% if npc.npc_health > 1 %} {{ npc.npc_health }} {% else %} dead {% endif %})
+            <form method="post" action="{% url 'npc:edit' npc.id %}">
+                {% csrf_token %}
+                <input type="number" name="health_mod">
+                <input type="checkbox" name="heal" id="healing">
+                <label for="healing">Heal</label>
+                <input type="submit">
+            </form>
+            <form action="{% url 'npc:delete' npc.id %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="DEL">
+            </form>
+        </li>
+    {% endfor %}
+</ul>
