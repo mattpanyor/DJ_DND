@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 
+
 class Npc(models.Model):
     npc_name = models.CharField(max_length=50)
     npc_health = models.IntegerField()
@@ -9,3 +10,7 @@ class Npc(models.Model):
 
     def __str__(self):
         return self.npc_name
+
+
+class Player(models.Model):
+    player_name = models.CharField(max_length=50)

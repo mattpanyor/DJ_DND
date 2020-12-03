@@ -6,6 +6,13 @@
     <input type="submit">
 </form>
 
+<form method="post" action="{% url 'npc:add_player' %}">
+    {% csrf_token %}
+    <input type="text" name="player_name" id="pn">
+    <label for="pn">Player name</label>
+    <input type="submit" value="Create">
+</form>
+
 <hr/>
 <ul>
     {% for npc in npc_list %}
@@ -23,5 +30,11 @@
                 <input type="submit" value="DEL">
             </form>
         </li>
+    {% endfor %}
+</ul>
+
+<ul>
+    {% for player in player_list %}
+        <li>{{ player.player_name }} <form method="post" action="{% url 'npc:del_player' player.id %}">{% csrf_token %}<input type="submit" value="DEL"></form></li>
     {% endfor %}
 </ul>

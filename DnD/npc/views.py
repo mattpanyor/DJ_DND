@@ -4,13 +4,19 @@ from django.http import HttpResponse, HttpResponseRedirect
 # Create your views here.
 from django.urls import reverse
 from django.views import generic
-from npc.models import Npc
+from npc.models import Npc, Player
 import json
 
 
 class IndexView(generic.ListView):
     model = Npc
     template_name = 'npc/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['player_list'] = Player.objects.all()
+        return context
 
 
 class DamageHistoryView(generic.DetailView):
@@ -59,4 +65,20 @@ def edit_npc(request, pk):
 def del_npc(request, pk):
     npc = get_object_or_404(Npc, pk=pk)
     npc.delete()
+    return HttpResponseRedirect(reverse('npc:index'))
+
+
+def add_player(request):
+    name = request.POST['player_name']
+
+    np = Player(player_name=name)
+    np.save()
+
+    return HttpResponseRedirect(reverse('npc:index'))
+
+
+def del_player(request, pk):
+    dp = get_object_or_404(Player, pk=pk)
+    dp.delete()
+
     return HttpResponseRedirect(reverse('npc:index'))
