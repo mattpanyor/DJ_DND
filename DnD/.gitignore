@@ -1,0 +1,5 @@
+/npc/migrations/*
+/npc/__pycache__
+/DnD/__pycache__
+db.sqlite3
+
